@@ -1,0 +1,26 @@
+[project]
+name = "echoforge"
+version = "1.0.0"
+description = "Counterfactual Decision Lab powered by FalkorDB"
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["falkordb", "graph", "counterfactual", "agents", "streamlit"]
+authors = [
+  {name = "EchoForge Contributors"},
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

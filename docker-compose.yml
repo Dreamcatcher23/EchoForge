@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: echoforge_falkordb
+    ports:
+      - "6379:6379"
+    volumes:
+      - falkordb_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6379", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  echoforge:
+    build: .
+    container_name: echoforge_app
+    ports:
+      - "8501:8501"
+    environment:
+      - FALKORDB_HOST=falkordb
+      - FALKORDB_PORT=6379
+      - FALKORDB_GRAPH_NAME=echoforge
+      # Uncomment and set your OpenAI key if using LLM agents:
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+    depends_on:
+      falkordb:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    command: streamlit run app/main.py --server.address=0.0.0.0 --server.port=8501
+    restart: unless-stopped
+
+volumes:
+  falkordb_data:
+    driver: local
