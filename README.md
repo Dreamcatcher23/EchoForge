@@ -246,6 +246,7 @@ EchoForge/
 ---
 
 ## Demo walkthrough
+https://www.youtube.com/watch?v=QUNKiMk4Z6E
 
 The seed data uses a fictional company called NovaTech Systems. The core decision is DEC-001: migrating their production database from PostgreSQL 12 to PostgreSQL 15 on March 15, 2024. It finished with a 3-day delay.
 
